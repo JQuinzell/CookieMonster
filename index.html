@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Cookie Monsters</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.0/mustache.js"></script>
+  </head>
+  <body class="container">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Cookie Monster</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Username">
+              <input type="password" class="form-control" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-default">Sign In</button>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li> <button class="btn btn-primary navbar-btn">Sign Up</button></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    
+    <div class="row">
+      <div class="col-sm-6" id="cookies">
+        <h2><u>Cookies</u></h2>
+        <button class="btn btn-primary">Add</button>
+        <script id="cookieTemplate" type="x-tmpl-mustache">
+          {{#cookies}}
+          <div class="well well-md">
+            <h4>{{name}}</h4>
+            <h6>Type: {{type}}</h6>
+            <h6>Distibutor: {{distributor}}</h6>
+            <h6>Count: {{count}}</h6>
+            <h6>Warehouse: {{warehouse}}</h6>
+            <h6>Price: {{price}}</h6>
+          </div>
+          {{/cookies}}
+        </script>
+      </div>
+
+      <div class="col-sm-6" id="warehouses">
+        <h2><u>Warehouses</u></h2>
+        <button type="button" class="btn btn-primary">Add</button>
+        <script id="warehouseTemplate" type="x-tmpl-mustache">
+          {{#warehouses}}
+          <div class="well well-md">
+            <h4>{{name}}</h4>
+            <h6>Address: {{address}}</h6>
+            <h6>Cookies Available: {{cookies}}</h6>
+            <h6><u>Cookies</u></h6>
+            <ul>
+              <li>{{cookie1}}</li>
+              <li>{{cookie2}}</li>
+              <li>{{cookie3}}</li>
+            </ul>
+            <button type="button" class="btn btn-danger">Remove</button>
+          </div>
+          {{/warehouses}}
+        </script>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-sm-6" id="dists">
+        <h2><u>Distributors</u></h2>
+        <button type="button" class="btn btn-primary">Add</button>
+        <script id="distTemplate" type="x-tmpl-mustache">
+          {{#dists}}
+          <div class="well well-md">
+            <h4>{{name}}</h4>
+            <h6>Address: {{address}}</h6>
+            <h6>Cookies for sales: {{cookies}}</h6>
+            <h6>Transactions:</h6>
+            <ul>
+              <li>Transaction 1</li>
+              <li>Transaction 2</li>
+              <li>Transaction 3</li>
+            </ul>          
+            <button type="button" class="btn btn-primary">Make Transaction</button>
+          </div>
+          {{/dists}}
+        </script>
+      </div>
+      <div class="col-sm-6" id="buyers">
+        <h2><u>Buyers</u></h2>
+        <script id="buyerTemplate" type="x-tmpl-mustache">
+        {{#buyers}}
+        <div class="well well-md">
+          <h4>Name: {{name}}</h4>
+          <h6>Phone: 999-999-9999</h6>
+          <h6>Address: Somewhere on Earth</h6>
+          <button class="btn btn-primary">View Orders</button>
+        </div>
+        {{/buyers}}
+        </script>
+      </div>    
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

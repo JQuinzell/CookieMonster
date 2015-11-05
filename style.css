@@ -1,0 +1,11 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  background: lightblue;
+}
+
+#cookies h2, #warehouses h2 {
+  text-align: center;
+}
