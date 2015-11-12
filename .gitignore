@@ -1,2 +1,4 @@
 test.py
 *.sqlite
+__pycache__
+*.pyc
