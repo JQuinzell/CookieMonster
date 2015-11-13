@@ -1,4 +1,5 @@
 import sqlite3
+from query import Query
 
 class Model(object):
   def __init__(self):
@@ -17,3 +18,11 @@ class Model(object):
     Model.cursor.execute(sql)
     Model.conn.commit()
 
+  def select(self, *columns):
+    cursor = Model.conn.cursor()
+    query = Query(cursor)
+
+    if columns:
+      query.select(columns)
+      
+    return query.frome(self.table)
