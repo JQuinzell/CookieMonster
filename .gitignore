@@ -1,4 +1,4 @@
-test.py
+test*.py
 *.sqlite
 __pycache__
 *.pyc
