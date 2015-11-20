@@ -37,7 +37,7 @@ cursor.execute('''
   ''')
 
 cursor.execute('''
-  CREATE TABLE IF NOT EXISTS cookies_warehouses(
+  CREATE TABLE IF NOT EXISTS stock(
     cookie VARCHAR(20) REFERENCES cookies(name),
     warehouse VARCHAR(20) REFERENCES warehouses(address),
     quantity INTEGER NOT NULL,
