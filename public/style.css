@@ -4,9 +4,60 @@
 
 body {
   background: lightblue;
+  margin: 20px auto;
+  width: 90%;
 }
 
-nav#main-nav {
+/*Navigation Bar*/
+#main-nav {
   height: 100px;
   background: red;
+  margin: 0;
+  padding: 0;
+  position: relative;
 }
+
+#main-nav h1 {
+  text-align: center;
+  margin: 0;
+  line-height: 60px;
+}
+
+#main-nav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  height: 40%;
+  position: absolute;
+  bottom: 0;
+  left: 75px;
+  right: 75px;
+}
+
+#main-nav ul li {
+  background: blue;
+  flex-grow: 1;
+  border-left: 2px solid black;
+  transition: flex-grow .5s, background .5s;
+}
+
+#main-nav ul li a {
+  text-decoration: none;
+  color: black;
+  display: block;
+  margin: 0;
+  padding: 0;
+  line-height: 40px;
+  text-align: center;
+}
+
+#main-nav ul li:first-child {
+  border-left: none;
+}
+
+#main-nav ul li:hover {
+  flex-grow: 2;
+  background: green;
+}
+/*End Navigation bar*/
