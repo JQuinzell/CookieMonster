@@ -6,6 +6,7 @@ body {
   background: lightblue;
 }
 
-#cookies h2, #warehouses h2 {
-  text-align: center;
+nav#main-nav {
+  height: 100px;
+  background: red;
 }
