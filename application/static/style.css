@@ -57,7 +57,7 @@ body {
 }
 
 #main-nav ul li:hover {
-  flex-grow: 2;
+  flex-grow: 1.3;
   background: green;
 }
 /*End Navigation bar*/
