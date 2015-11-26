@@ -1,5 +1,18 @@
 var $main
 
+var cookieData = {
+  "cookies": [
+    {
+      name: "Your mother made it",
+      price: "5.99"
+    },
+    {
+      name: "Chocolate",
+      price: "2.99"
+    }
+  ]
+}
+
 $(function(){
   $main = $("#main-content")
 
@@ -25,6 +38,7 @@ function loadMainPage() {
 function loadCookiePage() {
   $.ajax("/static/templates/cookies.html")
     .done(function(data){
+      data = Mustache.render(data, cookieData)
       setContent(data)
     })
 }
