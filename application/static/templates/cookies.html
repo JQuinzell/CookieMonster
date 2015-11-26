@@ -4,11 +4,19 @@
     {{#cookies}}
     <li>
       {{name}}: ${{price}}
+      <div class="button-group">
+        <button class="button buy">Buy</button>
+        <button class="button edit">Edit</button>
+        <button class="button remove">X</button>
+      </div>
     </li>
     {{/cookies}}
   </ul>
 </div>
 
 <div class="column">
-  
+  <h2>Create Cookie</h2>  
+  <input type="text" placeholder="Name">
+  <input type="text" placeholder="Price">
+  <button class="button">Add</button>
 </div>
