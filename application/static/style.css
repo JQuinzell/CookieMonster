@@ -61,3 +61,13 @@ body {
   background: green;
 }
 /*End Navigation bar*/
+
+#main-content {
+  position: relative;
+}
+
+.column {
+  width: 50%;
+  float: left;
+  padding: 0 50px;
+}
