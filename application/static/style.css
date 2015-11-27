@@ -111,14 +111,13 @@ body {
   margin: 15px 0;
 }
 
-/*Cookies page*/
-#cookie-list {
+.column ul {
   list-style: none;
   margin: 15px 0;
   padding: 0;
 }
 
-#cookie-list li {
+.column ul li {
   background: pink;
   height: 50px;
   line-height: 50px;
@@ -127,7 +126,6 @@ body {
   margin-bottom: 15px;
 }
 
-#cookie-list .button-group {
+.column ul .button-group {
   float: right;
 }
-/*End Cookies page*/
