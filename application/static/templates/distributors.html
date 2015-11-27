@@ -1,0 +1,21 @@
+<div class="column">
+  <h2>Distrubtors</h2>
+  <ul id="distributor-list">
+    {{#distributors}}
+    <li>
+      {{name}}: {{address}}
+      <div class="button-group">
+        <button class="button buy">Info</button>
+        <button class="button edit">Edit</button>
+      </div>
+    </li>
+    {{/distributors}}
+  </ul>
+</div>
+
+<div class="column">
+  <h2>Create Distributor</h2>  
+  <input type="text" placeholder="Name">
+  <input type="text" placeholder="Address">
+  <button class="button">Add</button>
+</div>

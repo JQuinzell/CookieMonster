@@ -26,6 +26,19 @@ var warehouseData = {
   ]
 }
 
+var distData = {
+  "distributors": [
+    {
+      name: "Gonzo",
+      address: "A Mansion"
+    },
+    {
+      name: "Superman",
+      address: "Batcave"
+    }
+  ]
+}
+
 $(function(){
   $main = $("#main-content")
 
@@ -67,6 +80,7 @@ function loadWarehousePage() {
 function loadDistributorPage() {
   $.ajax("/static/templates/distributors.html")
     .done(function(data){
+      data = Mustache.render(data, distData)
       setContent(data)
     })
 }
