@@ -13,6 +13,19 @@ var cookieData = {
   ]
 }
 
+var warehouseData = {
+  "warehouses": [
+    {
+      name: "Warehouse1",
+      address: "A street"
+    },
+    {
+      name: "Warehouse9000",
+      address: "Mars"
+    }
+  ]
+}
+
 $(function(){
   $main = $("#main-content")
 
@@ -46,6 +59,7 @@ function loadCookiePage() {
 function loadWarehousePage() {
   $.ajax("/static/templates/warehouses.html")
     .done(function(data){
+      data = Mustache.render(data, warehouseData)
       setContent(data)
     })
 }
