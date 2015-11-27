@@ -39,6 +39,19 @@ var distData = {
   ]
 }
 
+var buyerData = {
+  "buyers": [
+    {
+      name: "John Locke",
+      address: "Deserted island"
+    },
+    {
+      name: "Yo Mama",
+      address: "Yo house"
+    }
+  ]
+}
+
 $(function(){
   $main = $("#main-content")
 
@@ -88,6 +101,7 @@ function loadDistributorPage() {
 function loadBuyerPage() {
   $.ajax("/static/templates/buyers.html")
     .done(function(data){
+      data = Mustache.render(data, buyerData)
       setContent(data)
     })
 }
