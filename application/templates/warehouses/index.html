@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block body %}
+{{ super() }}
+<div class="column">
+  <h2>Warehouses</h2>
+  <ul id="warehouses-list">
+    {% for warehouse in warehouses %}
+    <li>
+      {{warehouse.name}}: {{warehouse.address}}
+      <div class="button-group">
+        <button class="button buy">Info</button>
+        <button class="button edit">Edit</button>
+        <button class="button remove">X</button>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<div class="column">
+  <h2>Create Warehouse</h2>  
+  <input type="text" placeholder="Name">
+  <input type="text" placeholder="Address">
+  <button class="button">Add</button>
+</div>
+{% endblock %}
