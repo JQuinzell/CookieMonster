@@ -1,10 +1,10 @@
 # from flask import send_static_file
 from . import main
-from flask import current_app
+from flask import render_template
 
 @main.route('/')
 def index():
-  return current_app.send_static_file('index.html')
+  return render_template('index.html')
 
 @main.route('/static/<path:path>')
 def asset(path):
