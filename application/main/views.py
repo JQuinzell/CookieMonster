@@ -1,4 +1,3 @@
-# from flask import send_static_file
 from . import main
 from flask import render_template
 
