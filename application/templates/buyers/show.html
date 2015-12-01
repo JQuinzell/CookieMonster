@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block body %}
+{{ super() }}
+<div class="column">
+  <h2>{{ buyer.name }}</h2>
+  <h3>{{ buyer.address }}</h3>
+
+  <ul class="orders">
+  {% for order in buyer.orders %}
+    <li>
+      #{{ order.id }}: 
+      <ul>
+        {% for cookie in order.cookies %}
+        <li>
+          {{ cookie.name }}: {{ cookie.price }}
+        </li>
+        {% endfor %}
+      </ul>
+      {{ order.total }}
+    </li>
+  {% endfor %}
+  </ul>
+
+</div>
+{% endblock %}

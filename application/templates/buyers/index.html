@@ -8,7 +8,7 @@
     <li>
       {{ buyer.name }}: ${{ buyer.price }}
       <div class="button-group">
-        <button class="button info">Info</button>
+        <button class="button info"><a href="{{ url_for('buyers.show', name=buyer.name) }}">Info</a></button>
         <button class="button edit">Edit</button>
         <button class="button remove">X</button>
       </div>
