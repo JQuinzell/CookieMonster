@@ -1,7 +1,3 @@
-*, *:before, *:after {
-  box-sizing: border-box;
-}
-
 body {
   background: lightblue;
   padding-top: 50px;
