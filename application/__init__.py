@@ -1,5 +1,8 @@
 from flask import Flask
+from flask.ext.bootstrap import Bootstrap
+
 app = Flask(__name__, static_url_path='/static')
+Bootstrap(app)
 
 from .main import main as main_blueprint
 from .cookies import cookies as cookies_blueprint
