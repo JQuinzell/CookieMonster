@@ -1,27 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Cookie Monster</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-  <nav id="main-nav">
-    <h1>Cookie Monster</h1>
-    <ul>
-      <li class="cookies"><a href="{{ url_for('cookies.index') }}">Cookies</a></li>
-      <li class="warehouses"><a href="{{ url_for('warehouses.index') }}">Warehouses</a></li>
-      <li class="distributors"><a href="{{ url_for('distributors.index') }}">Distributors</a></li>
-      <li class="buyers"><a href="{{ url_for('buyers.index') }}">Buyers</a></li>
-    </ul>
-  </nav>
+{% extends "bootstrap/base.html" %}
+{% block title%}Cookie Monster{% endblock %}
 
-  <div id="main-content">
-    {% block body %}
-    {% endblock %}
-  </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.0/mustache.min.js"></script>
-  <!-- // <script src="static/script.js"></script> -->
-</body>
-</html>
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" 
+      href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
+
+{% block navbar %}
+<nav id="main-nav">
+  <h1>Cookie Monster</h1>
+  <ul>
+    <li class="cookies"><a href="{{ url_for('cookies.index') }}">Cookies</a></li>
+    <li class="warehouses"><a href="{{ url_for('warehouses.index') }}">Warehouses</a></li>
+    <li class="distributors"><a href="{{ url_for('distributors.index') }}">Distributors</a></li>
+    <li class="buyers"><a href="{{ url_for('buyers.index') }}">Buyers</a></li>
+  </ul>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div id="main-content">
+  {% block main %}
+  {% endblock %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.0/mustache.min.js"></script>
+<!-- // <script src="static/script.js"></script> -->
+{{super()}}
+{% endblock %}
