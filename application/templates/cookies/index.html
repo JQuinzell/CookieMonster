@@ -3,18 +3,12 @@
 {{ super() }}
 <div class="col-md-6">
   <h2>Mmh. Cookies</h2>
+  <button class="btn btn-default">Add new</button>
   <ul class="list-group">
     {% for cookie in cookies %}
-    <li class="list-group-item">
+    <button class="list-group-item">
       <h4>{{ cookie.name }} <small>${{ cookie.price }}</small></h4>
-      
-      <button class="btn btn-primary">Buy</button>
-      <div class="btn-group">
-        <button class="btn btn-default">Edit</button>
-        <button class="btn btn-default">Delete</button>
-      </div>      
-
-    </li>
+    </button>
     {% endfor %}
   </ul>
 </div>

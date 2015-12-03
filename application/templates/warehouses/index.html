@@ -3,24 +3,26 @@
 {{ super() }}
 <div class="col-md-6">
   <h2>Warehouses</h2>
-  <ul id="warehouses-list">
+  <button class="btn btn-default">Add new</button>
+  <ul class="list-group">
     {% for warehouse in warehouses %}
-    <li>
-      {{warehouse.name}}: {{warehouse.address}}
-      <div class="button-group">
-        <button class="button buy">Info</button>
-        <button class="button edit">Edit</button>
-        <button class="button remove">X</button>
-      </div>
-    </li>
+    <button class="list-group-item">
+      <h4>{{warehouse.name}} <small>{{warehouse.address}}</small></h4>
+    </button>
     {% endfor %}
   </ul>
 </div>
 
 <div class="col-md-6">
-  <h2>Create Warehouse</h2>  
-  <input type="text" placeholder="Name">
-  <input type="text" placeholder="Address">
-  <button class="button">Add</button>
+  <form>
+    <h2>Create Warehouse</h2>  
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Name">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Address">
+    </div>
+    <button class="btn btn-default">Add</button>
+  </form>
 </div>
 {% endblock %}
