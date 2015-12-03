@@ -3,7 +3,18 @@ from flask import render_template
 
 @buyers.route('/buyers')
 def index():
-  return render_template('buyers/index.html', buyers=[])
+  buyers = [
+    {
+      "name": "Buyer 1",
+      "address": "Place 1"
+    },
+    {
+      "name": "Buyer 2",
+      "address": "Place 2"
+    }
+  ]
+
+  return render_template('buyers/index.html', buyers=buyers)
 
 @buyers.route('/buyers/<name>')
 def show(name):
