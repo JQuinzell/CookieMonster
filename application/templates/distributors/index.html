@@ -17,10 +17,10 @@
   <form>
     <h2>Create Distributor</h2>  
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="Name">
+      <input name="name" type="text" class="form-control" placeholder="Name">
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" placeholder="Address">
+      <input name="address" type="text" class="form-control" placeholder="Address">
     </div>
     <button class="btn btn-default">Submit</button>
   </form>
@@ -76,10 +76,8 @@
     editTemplate = $('#edit-template').html()
     $content = $('#side-content')
 
-    $content.html(createTemplate)
-    $("button#add").click(function(){
-      $content.html(createTemplate)
-    })
+    loadCreatePage()
+    $("button#add").click(loadCreatePage)
 
     $('#dists-list button').click(function(){
       var name = this.id.replace(/-/g, ' ')
@@ -112,6 +110,29 @@
         dataType: 'json',
         data: JSON.stringify(values),
         method: 'PUT'
+      })
+        .done(function(data){
+          console.log(data)
+        })
+    })
+  }
+
+  function loadCreatePage() {
+    $content.html(createTemplate)
+    $content.find('form').submit(function(e){
+      e.preventDefault()
+      var values = {}
+      $.each($content.find('form').serializeArray(), function(i, field){
+        if(field.value) {
+          values[field.name] = field.value
+        }
+      })
+
+      $.ajax('distributors', {
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify(values),
+        method: 'POST'
       })
         .done(function(data){
           console.log(data)

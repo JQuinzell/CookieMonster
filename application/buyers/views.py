@@ -1,20 +1,26 @@
 from . import buyers
 from flask import render_template, jsonify, request
 
-@buyers.route('/buyers')
+@buyers.route('/buyers', methods=['GET', 'POST'])
 def index():
-  buyers = [
-    {
-      "name": "Buyer 1",
-      "address": "Place 1"
-    },
-    {
-      "name": "Buyer 2",
-      "address": "Place 2"
-    }
-  ]
+  if request.method == 'GET':
+    buyers = [
+      {
+        "name": "Buyer 1",
+        "address": "Place 1"
+      },
+      {
+        "name": "Buyer 2",
+        "address": "Place 2"
+      }
+    ]
 
-  return render_template('buyers/index.html', buyers=buyers)
+    return render_template('buyers/index.html', buyers=buyers)
+
+  if request.method == 'POST':
+    buyer = request.get_json()
+    #create buyer
+    return jsonify(**buyer)
 
 @buyers.route('/buyers/<name>', methods=['GET', 'PUT'])
 def show(name):

@@ -1,19 +1,24 @@
 from . import distributors
 from flask import render_template, request, jsonify
 
-@distributors.route('/distributors')
+@distributors.route('/distributors', methods=['GET', 'POST'])
 def index():
-  dists = [
-    {
-      "name": "Guy 1",
-      "address": "Place 1"
-    },
-    {
-      "name": "Guy 2",
-      "address": "Place 2"
-    }
-  ]
-  return render_template('distributors/index.html', distributors=dists)
+  if request.method == 'GET':
+    dists = [
+      {
+        "name": "Guy 1",
+        "address": "Place 1"
+      },
+      {
+        "name": "Guy 2",
+        "address": "Place 2"
+      }
+    ]
+    return render_template('distributors/index.html', distributors=dists)
+
+  if request.method == 'POST':
+    dist = request.get_json()
+    return jsonify(**dist)
 
 @distributors.route('/distributors/<name>', methods=['GET', 'PUT'])
 def dist(name):
