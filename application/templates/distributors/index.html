@@ -2,27 +2,121 @@
 {% block main %}
 {{ super() }}
 <div class="col-md-6">
-  <h2>Distrubtors</h2>
-  <button class="btn btn-default">Add new</button>
-  <ul class="list-group">
+  <h2>Distrubtors <button id="add" class="btn btn-default pull-right">Add new</button></h2>
+  <ul id="dists-list" class="list-group">
     {% for dist in distributors %}
-    <button class="list-group-item">
+    <button id="{{ dist.name | replace(" ", "-") }}" class="list-group-item">
       <h4>{{dist.name}} <small>{{dist.address}}</small></h4>
     </button>
     {% endfor %}
   </ul>
 </div>
 
-<div class="col-md-6">
+<div id="side-content" class="col-md-6">
+  <script id="create-template" type="x-tmpl-mustache">
   <form>
-    <h2>Create Buyer</h2>  
+    <h2>Create Distributor</h2>  
     <div class="form-group">
       <input type="text" class="form-control" placeholder="Name">
     </div>
     <div class="form-group">
       <input type="text" class="form-control" placeholder="Address">
     </div>
-    <button class="btn btn-default">Add</button>
+    <button class="btn btn-default">Submit</button>
   </form>
+  </script>
+
+  <script id="view-template" type="x-tmpl-mustache">
+  {%raw%}
+  <h2>{{ name }}<button id="edit" class="btn btn-default pull-right">Edit</button></h2>
+  <div class="well well-lg">
+    <h4>Address <small>{{ address }}</small></h4>
+    <ul class="list-group">
+    {{#transactions}}
+      <li class="list-group-item">
+        <h5>Transaction #{{id}}</h5>
+        <h5>{{cookie}}</h5>
+        <h5>${{price}}</h5>
+      </li>
+    {{/transactions}}
+    </ul>
+  </div>
+  {%endraw%}
+  </script>
+
+  <script id="edit-template" type="x-tmpl-mustache">
+  {%raw%}
+  <form>
+    <h2>Edit</h2>  
+    <div class="form-group">
+      <input name="name" type="text" class="form-control" placeholder="{{ name }}">
+    </div>
+    <div class="form-group">
+      <input name="address" type="text" class="form-control" placeholder="{{ address }}">
+    </div>
+    <button class="btn btn-default">Submit</button>
+  </form>
+  {%endraw%}
+  </script>
 </div>
 {% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+  var createTemplate
+  var viewTemplate
+  var editTemplate 
+  var $content
+  var current = {}
+
+  $(function(){
+    createTemplate = $('#create-template').html()
+    viewTemplate = $('#view-template').html()
+    editTemplate = $('#edit-template').html()
+    $content = $('#side-content')
+
+    $content.html(createTemplate)
+    $("button#add").click(function(){
+      $content.html(createTemplate)
+    })
+
+    $('#dists-list button').click(function(){
+      var name = this.id.replace(/-/g, ' ')
+      $.get('distributors/' + name)
+        .then(function(data){
+          current.name = data.name
+          current.address = data.address
+
+          var content = Mustache.render(viewTemplate, data)
+          $content.html(content)
+          $content.find('button#edit').click(loadEditPage)
+        })
+    })
+  })
+
+  function loadEditPage() {
+    var content = Mustache.render(editTemplate, current)
+    $content.html(content)
+    $content.find('form').submit(function(e){
+      e.preventDefault()
+      var values = {}
+      $.each($content.find('form').serializeArray(), function(i, field){
+        if(field.value) {
+          values[field.name] = field.value
+        }
+      })
+
+      $.ajax('distributors/' + current.name, {
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify(values),
+        method: 'PUT'
+      })
+        .done(function(data){
+          console.log(data)
+        })
+    })
+  }
+</script>
+{% endblock%}

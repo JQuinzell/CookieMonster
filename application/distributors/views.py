@@ -1,5 +1,5 @@
 from . import distributors
-from flask import render_template
+from flask import render_template, request, jsonify
 
 @distributors.route('/distributors')
 def index():
@@ -14,3 +14,29 @@ def index():
     }
   ]
   return render_template('distributors/index.html', distributors=dists)
+
+@distributors.route('/distributors/<name>', methods=['GET', 'PUT'])
+def dist(name):
+  if request.method == 'GET':
+    dist = {
+      "name": name,
+      "address": "Earth",
+      "transactions": [
+        {
+          "id": 1,
+          "price": "500",
+          "cookie": "Chocolate Chip"
+        },
+        {
+          "id": 2,
+          "price": "300",
+          "cookie": "Oatmeal Grossness"
+        }
+      ]
+    }
+
+    return jsonify(**dist)
+
+  if request.method == 'PUT':
+    update = request.get_json()
+    return jsonify(**update)

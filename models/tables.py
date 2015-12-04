@@ -15,6 +15,7 @@ cursor.execute('''
 
 cursor.execute('''
   CREATE TABLE IF NOT EXISTS distributors(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     name VARCHAR(20),
     address VARCHAR(20),
     PRIMARY KEY(name)

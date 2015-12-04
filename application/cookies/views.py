@@ -1,5 +1,5 @@
 from . import cookies
-from flask import render_template
+from flask import render_template, request, jsonify
 
 @cookies.route('/cookies')
 def index():
@@ -16,3 +16,18 @@ def index():
     }
   ]
   return render_template('cookies/index.html', cookies=cookies)
+
+@cookies.route('/cookies/<name>', methods=['GET', 'PUT'])
+def cookie(name):
+  if request.method == 'GET':
+    cookie = {
+      "name": name,
+      "price": "5.99"
+    }
+
+    return jsonify(**cookie)
+
+  if request.method == 'PUT':
+    #update
+    update = request.get_json()
+    return jsonify(**update)
