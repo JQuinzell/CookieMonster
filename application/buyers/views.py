@@ -1,5 +1,5 @@
 from . import buyers
-from flask import render_template
+from flask import render_template, jsonify
 
 @buyers.route('/buyers')
 def index():
@@ -52,4 +52,4 @@ def show(name):
       }
     ]
   }
-  return render_template('buyers/show.html', buyer=buyer)
+  return jsonify(**buyer)
