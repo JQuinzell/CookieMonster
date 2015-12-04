@@ -24,15 +24,17 @@ cursor.execute('''
 
 cursor.execute('''
   CREATE TABLE IF NOT EXISTS warehouses(
+    name VARCHAR(20),
     address VARCHAR(20),
-    PRIMARY KEY(address)
+    PRIMARY KEY(name)
   );
   ''')
 
 cursor.execute('''
-  CREATE TABLE IF NOT EXISTS sells(
+  CREATE TABLE IF NOT EXISTS transactions(
     distributor VARCHAR(20) REFERENCES distributors(name),
     cookie VARCHAR(20) REFERENCES cookies(name),
+    warehouse VARCHAR(2) REFERENCES warehouses(name)
     price INTEGER
   );
   ''')
@@ -40,7 +42,7 @@ cursor.execute('''
 cursor.execute('''
   CREATE TABLE IF NOT EXISTS stock(
     cookie VARCHAR(20) REFERENCES cookies(name),
-    warehouse VARCHAR(20) REFERENCES warehouses(address),
+    warehouse VARCHAR(20) REFERENCES warehouses(name),
     quantity INTEGER NOT NULL,
     PRIMARY KEY(cookie, warehouse)
   );
