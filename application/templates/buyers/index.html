@@ -2,11 +2,11 @@
 {% block main %}
 {{ super() }}
 <div class="col-md-6">
-  <h2>Buyers <button id="add" class="btn btn-default">Add new</button></h2>
+  <h2>Buyers <button id="add" class="btn btn-default pull-right">Add new</button></h2>
   <ul id="buyers-list" class="list-group">
     {% for buyer in buyers %}
-    <button id="{{ buyer.name | replace(" ", "-") }}" class="list-group-item">
-      <h4>{{ buyer.name }} <small>{{ buyer.address }}</small></h4>
+    <button id="buyer-{{ buyer.id }}" class="list-group-item">
+      <h4>{{ buyer.name }}</h4>
     </button>
     {% endfor %}
   </ul>
@@ -19,9 +19,6 @@
     <div class="form-group">
       <input name="name" type="text" class="form-control" placeholder="Name">
     </div>
-    <div class="form-group">
-      <input name="address" type="text" class="form-control" placeholder="Address">
-    </div>
     <button class="btn btn-default">Signup</button>
   </form>
   </script>
@@ -30,20 +27,25 @@
   {%raw%}
   <h2>{{ name }}<button id="edit" class="btn btn-default pull-right">Edit</button></h2>
   <div class="well well-lg">
-    <h4>Address <small>{{ address }}</small></h4>
+    <h3>Addresses</h3>
+    {{#addresses}}
+    <h4><small>{{ address }}</small></h4>
+    {{/addresses}}
+    <h3>Orders</h3>
     <ul class="list-group">
     {{#orders}}
       <li class="list-group-item">
         <h5>Order #{{id}}</h5>
         <h5>Total: ${{total}}</h5>
         <ul class="list-group">
-          {{#cookies}}
-          <li class="list-group-item">{{name}} <small>${{price}}</small></li>
-          {{/cookies}}
+          {{#purchases}}
+          <li class="list-group-item"><span class="badge">{{ amount }}</span> Cookie: {{cookie}}<br> Warehouse: {{warehouse}}<br> <small>${{price}}</small></li>
+          {{/purchases}}
         </ul>
       </li>
     {{/orders}}
     </ul>
+    <button id="delete" class="btn btn-danger">Delete</button>
   </div>
   {%endraw%}
   </script>
@@ -54,9 +56,6 @@
     <h2>Edit</h2>  
     <div class="form-group">
       <input name="name" type="text" class="form-control" placeholder="{{ name }}">
-    </div>
-    <div class="form-group">
-      <input name="address" type="text" class="form-control" placeholder="{{ address }}">
     </div>
     <button class="btn btn-default">Submit</button>
   </form>
@@ -84,15 +83,21 @@
     $("button#add").click(loadCreatePage)
 
     $('#buyers-list button').click(function(){
-      var name = this.id.replace(/-/g, ' ')
-      $.get('buyers/' + name)
+      var buyer_id = this.id.match(/\d+/)[0]
+      $.get('buyers/' + buyer_id)
         .then(function(data){
           current.name = data.name
-          current.address = data.address
+          current.id = data.id
 
           var content = Mustache.render(viewTemplate, data)
           $content.html(content)
           $content.find('button#edit').click(loadEditPage)
+          $content.find('button#delete').click(function(){
+            $.ajax('buyers/' + buyer_id, {
+              method: 'DELETE'
+            })
+              .then(function(data){console.log(data)})
+          })
         })
     })
   })
@@ -109,7 +114,7 @@
         }
       })
 
-      $.ajax('buyers/' + current.name, {
+      $.ajax('buyers/' + current.id, {
         contentType: 'application/json',
         dataType: 'json',
         data: JSON.stringify(values),

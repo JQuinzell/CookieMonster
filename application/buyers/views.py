@@ -7,11 +7,11 @@ def index():
     buyers = [
       {
         "name": "Buyer 1",
-        "address": "Place 1"
+        "id": 0
       },
       {
         "name": "Buyer 2",
-        "address": "Place 2"
+        "id": 1
       }
     ]
 
@@ -22,37 +22,50 @@ def index():
     #create buyer
     return jsonify(**buyer)
 
-@buyers.route('/buyers/<name>', methods=['GET', 'PUT'])
-def show(name):
+@buyers.route('/buyers/<int:buyer_id>', methods=['GET', 'PUT', 'DELETE'])
+def show(buyer_id):
+  #find buyer with buyer_id
+
   if request.method == 'GET':
     buyer = {
-      "name": name,
-      "address": "Test",
+      "name": "John Doe", #first + last
+      "addresses": [{"address": "Address 1"}, {"address": "Address 2"}], #use join table
+      "id": buyer_id,
       "orders": [
         {
           "id": 1,
-          "total": 0,
-          "cookies": [
+          "description": "I bought some cookies!",
+          "total": 0, #aggregate - sum price
+          "purchases": [
             {
-              "name": "Test",
+              "cookie": "Test",
+              "warehouse": "Some Warehouse",
+              "amount": 0,
               "price": "0.00"
             },
             {
-              "name": "Test",
+              "cookie": "Test",
+              "warehouse": "Some Warehouse",
+              "amount": 0,
               "price": "0.00"
             }
           ]
         },
         {
           "id": 2,
+          "description": "I bought some cookies!",
           "total": 0,
-          "cookies": [
+          "purchases": [
             {
-              "name": "Test",
+              "cookie": "Test",
+              "warehouse": "Some Warehouse",
+              "amount": 0,
               "price": "0.00"
             },
             {
-              "name": "Test",
+              "cookie": "Test",
+              "warehouse": "Some Warehouse",
+              "amount": 0,
               "price": "0.00"
             }
           ]
@@ -62,6 +75,15 @@ def show(name):
     return jsonify(**buyer)
 
   if request.method == 'PUT':
-    # Update buyer
     update = request.get_json()
+    first, last = update["name"].split(" ")
+    #update buyer with this information
+    update = {
+      "first": first,
+      "last": last,
+    }
     return jsonify(**update)
+
+  if request.method == 'DELETE':
+    #delete buyer with id = buyer_id
+    return "OK"
