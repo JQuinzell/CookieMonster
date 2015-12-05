@@ -2,6 +2,7 @@ import sqlite3
 from query import Query
 
 class Model(object):
+
   def __init__(self):
     pass
 
@@ -18,11 +19,16 @@ class Model(object):
     Model.cursor.execute(sql)
     Model.conn.commit()
 
-  def select(self, *columns):
+  @staticmethod
+  def select(*columns):
     cursor = Model.conn.cursor()
     query = Query(cursor)
 
     if columns:
-      query.select(columns)
-      
-    return query.frome(self.table)
+      query.select(*columns)
+    
+    return query
+
+  @staticmethod
+  def lastrowid():
+    return Model.cursor.lastrowid

@@ -7,6 +7,7 @@ cursor = conn.cursor()
 cursor.execute('''
   CREATE TABLE IF NOT EXISTS cookies(
     name VARCHAR(20),
+    price REAL,
     theme VARCHAR(20),
     diameter INTEGER,
     PRIMARY KEY(name)
@@ -15,7 +16,6 @@ cursor.execute('''
 
 cursor.execute('''
   CREATE TABLE IF NOT EXISTS distributors(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
     name VARCHAR(20),
     address VARCHAR(20),
     PRIMARY KEY(name)
@@ -32,10 +32,12 @@ cursor.execute('''
 
 cursor.execute('''
   CREATE TABLE IF NOT EXISTS transactions(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     distributor VARCHAR(20) REFERENCES distributors(name),
     cookie VARCHAR(20) REFERENCES cookies(name),
-    warehouse VARCHAR(2) REFERENCES warehouses(name)
-    price INTEGER
+    warehouse VARCHAR(20) REFERENCES warehouses(name),
+    price REAL,
+    amount int
   );
   ''')
 
@@ -52,9 +54,7 @@ cursor.execute('''
   CREATE TABLE IF NOT EXISTS buyers(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     first VARCHAR(20),
-    middle VARCHAR(20),
-    last VARCHAR(20),
-    phone CHAR(10)
+    last VARCHAR(20)
   );
   ''')
 
@@ -76,11 +76,22 @@ cursor.execute('''
   );
   ''')
 
+#buyer_orders because order is a keyword
 cursor.execute('''
-  CREATE TABLE IF NOT EXISTS orders(
+  CREATE TABLE IF NOT EXISTS buyer_orders(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     buyer INTEGER REFERENCES buyers(id),
     description TEXT
+  );
+  ''')
+
+cursor.execute('''
+  CREATE TABLE IF NOT EXISTS purchases(
+    cookie VARCHAR(20) REFERENCES cookies(name),
+    warehouse VARCHAR(20) REFERENCES warehouses(name),
+    buyer_order INTEGER REFERENCES buyer_orders(id),
+    amount INTEGER,
+    PRIMARY KEY(cookie, warehouse, buyer_order)
   );
   ''')
 

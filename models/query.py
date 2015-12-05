@@ -23,11 +23,11 @@ class Query(object):
   def execute(self):
     select_clause = "SELECT "
     if not self.columns:
-      select_clause += "* "
+      select_clause += "*"
     else:
       select_clause += ", ".join(self.columns)
 
-    from_clause = "FROM " + ", ".join(self.tables)
+    from_clause = " FROM " + ", ".join(self.tables)
 
     where_clause = ""
     if self.conditions:

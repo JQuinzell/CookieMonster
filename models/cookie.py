@@ -4,15 +4,17 @@ class Cookie(Model):
   # make sure table matches name in tables.py
   table = "cookies"
 
-  def __init__(self, name, theme=None, diameter=None):
+  def __init__(self, name, price, theme=None, diameter=None):
     self.name = name
     self.theme = theme
+    self.price = price
     self.diameter = diameter
 
   # every save method will be similar
   def save(self):
     params = {
       "name": self.name,
+      "price": self.price,
     }
 
     #only add if attribute is not None (null)
@@ -23,3 +25,8 @@ class Cookie(Model):
       params["diameter"] = self.diameter
 
     self.insert(**params)
+
+  @staticmethod
+  def all():
+    for cookie in Cookie.select().frome(Cookie.table).execute():
+      yield Cookie(*cookie)
