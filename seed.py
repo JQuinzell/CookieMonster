@@ -19,6 +19,8 @@ cursor.execute('DELETE FROM warehouses')
 cursor.execute('DELETE FROM buyers')
 cursor.execute('DELETE FROM buyer_orders')
 cursor.execute('DELETE FROM purchases')
+cursor.execute('DELETE FROM stock')
+cursor.execute('DELETE FROM transactions')
 
 #create cookies
 for i in range(5):
