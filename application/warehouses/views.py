@@ -1,8 +1,11 @@
 from . import warehouses
 from flask import render_template, jsonify, request
+from model import Model
 
 @warehouses.route('/warehouses', methods=['GET', 'POST'])
 def index():
+  conn, cur = Model.make_cursor()
+  
   if request.method == 'GET':
     wares = [
       {
@@ -23,6 +26,7 @@ def index():
 
 @warehouses.route('/warehouses/<name>', methods=['GET', 'PUT'])
 def warehouse(name):
+  conn, cur = Model.make_cursor()
   if request.method == 'GET':
     ware = {
       "name": name,
