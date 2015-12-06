@@ -1,19 +1,17 @@
 from . import buyers
+from models import Model
 from flask import render_template, jsonify, request
 
 @buyers.route('/buyers', methods=['GET', 'POST'])
 def index():
   if request.method == 'GET':
-    buyers = [
-      {
-        "name": "Buyer 1",
-        "id": 0
-      },
-      {
-        "name": "Buyer 2",
-        "id": 1
+    buyers = []
+    for buyer in Model.execute('SELECT first, last, id FROM buyers'):
+      buyer = {
+        "name": "{} {}".format(buyer[0], buyer[1]),
+        "id": buyer[2]
       }
-    ]
+      buyers.append(buyer)
 
     return render_template('buyers/index.html', buyers=buyers)
 
