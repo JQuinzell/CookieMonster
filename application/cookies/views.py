@@ -49,5 +49,21 @@ def cookie(name):
 
   if request.method == 'PUT':
     #update
-    update = request.get_json()
-    return jsonify(**update)
+    cookie = request.get_json()
+    new_name = cookie["name"]
+    price = cookie["price"]
+    conn, cur = Model.make_cursor()
+    cur.execute('''
+    UPDATE cookies
+    SET name = "{}", price = {}
+    WHERE name="{}"
+    '''.format(new_name, price, name))
+
+    #also update stock references
+    cur.execute('''
+    UPDATE stock
+    SET cookie = "{}"
+    WHERE cookie = "{}"
+    '''.format(new_name, name))
+    conn.commit()
+    return "OK"
