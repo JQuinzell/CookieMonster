@@ -21,7 +21,7 @@ def index():
         "count": r[2]
       }
       cookies.append(r)
-    
+
     return render_template('cookies/index.html', cookies=cookies)
 
   if request.method == 'POST':
@@ -31,6 +31,7 @@ def index():
 @cookies.route('/cookies/<name>', methods=['GET', 'PUT'])
 def cookie(name):
   if request.method == 'GET':
+    #not in use
     cookie = {
       "name": name,
       "price": "5.99"
