@@ -5,18 +5,19 @@ from model import Model
 @warehouses.route('/warehouses', methods=['GET', 'POST'])
 def index():
   conn, cur = Model.make_cursor()
-  
+
   if request.method == 'GET':
-    wares = [
-      {
-        "name": "Store 1",
-        "address": "Place 1"
-      },
-      {
-        "name": "Store 2",
-        "address": "Place 2"
+    wares = []
+    rows = cur.execute('''
+    SELECT name, address
+    FROM warehouses
+    ''')
+    for r in rows:
+      w = {
+        "name": r[0],
+        "address": r[1]
       }
-    ]
+      wares.append(w)
 
     return render_template('warehouses/index.html', warehouses=wares)
 
