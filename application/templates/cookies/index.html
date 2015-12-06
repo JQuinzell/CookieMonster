@@ -30,7 +30,7 @@
   <script id="edit-template" type="x-tmpl-mustache">
   {%raw%}
   <form>
-    <h2>Edit</h2>  
+    <h2>Edit <button id="delete" class="btn btn-danger pull-right">Delete</button></h2>  
     <div class="form-group">
       <input name="name" type="text" class="form-control" placeholder="{{ name }}">
     </div>
@@ -94,6 +94,13 @@
         .done(function(data){
           console.log(data)
         })
+    })
+
+    $content.find('button#delete').click(function(){
+      $.ajax('cookies/' + current.name, {
+        'method': 'DELETE'
+      })
+        .done(function(date){ console.log(data)} )
     })
   }
 
