@@ -26,7 +26,15 @@ def index():
 
   if request.method == 'POST':
     cookie = request.get_json()
-    return jsonify(**cookie)
+    name = cookie["name"]
+    price = cookie["price"]
+    conn, cur = Model.make_cursor()
+    cur.execute('''
+    INSERT INTO cookies(name, price)
+    VALUES ("{}", {})
+    '''.format(name, price))
+    conn.commit()
+    return "OK"
 
 @cookies.route('/cookies/<name>', methods=['GET', 'PUT'])
 def cookie(name):
