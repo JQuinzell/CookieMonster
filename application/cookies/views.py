@@ -36,7 +36,7 @@ def index():
     conn.commit()
     return "OK"
 
-@cookies.route('/cookies/<name>', methods=['GET', 'PUT'])
+@cookies.route('/cookies/<name>', methods=['GET', 'PUT', 'DELETE'])
 def cookie(name):
   if request.method == 'GET':
     #not in use
@@ -65,5 +65,11 @@ def cookie(name):
     SET cookie = "{}"
     WHERE cookie = "{}"
     '''.format(new_name, name))
+    conn.commit()
+    return "OK"
+
+  if request.method == 'DELETE':
+    conn, cur = Model.make_cursor()
+    cur.execute('DELETE FROM cookies WHERE name = "{}"'.format(name))
     conn.commit()
     return "OK"
