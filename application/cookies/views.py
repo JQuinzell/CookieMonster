@@ -1,21 +1,27 @@
 from . import cookies
+from model import Model
 from flask import render_template, request, jsonify
 
 @cookies.route('/cookies', methods=['GET', 'POST'])
 def index():
   if request.method == 'GET':
-    cookies = [
-      {
-        "name": "Chocolate Chip",
-        "price": "5.99",
-        "count": 5
-      },
-      {
-        "name": "Yo Mama",
-        "price": "11.59",
-        "count": 200
+    conn, cur = Model.make_cursor()
+    rows = cur.execute('''
+    SELECT name, price, SUM(quantity)
+    FROM cookies, stock
+    WHERE name=cookie
+    GROUP BY cookie
+    ''')
+
+    cookies = []
+    for r in rows:
+      r = {
+        "name": r[0],
+        "price": r[1],
+        "count": r[2]
       }
-    ]
+      cookies.append(r)
+    
     return render_template('cookies/index.html', cookies=cookies)
 
   if request.method == 'POST':
