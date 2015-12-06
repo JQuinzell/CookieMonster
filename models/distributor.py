@@ -1,5 +1,5 @@
-from model import Model
-from transaction import Transaction
+from models.model import Model
+from models.transaction import Transaction
 
 class Distributor(Model):
   # make sure table matches name in tables.py

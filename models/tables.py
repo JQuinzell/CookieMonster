@@ -81,7 +81,8 @@ cursor.execute('''
   CREATE TABLE IF NOT EXISTS buyer_orders(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     buyer INTEGER REFERENCES buyers(id),
-    description TEXT
+    description TEXT,
+    total REAL
   );
   ''')
 

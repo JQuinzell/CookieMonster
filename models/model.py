@@ -1,5 +1,5 @@
 import sqlite3
-from query import Query
+from models.query import Query
 
 class Model(object):
 

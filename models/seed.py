@@ -1,12 +1,12 @@
 import sqlite3
-from model import Model
-from cookie import Cookie
-from distributor import Distributor
-from warehouse import Warehouse
-from buyer import Buyer
-from transaction import Transaction
-from order import Order
-from purchase import Purchase
+from models.model import Model
+from models.cookie import Cookie
+from models.distributor import Distributor
+from models.warehouse import Warehouse
+from models.buyer import Buyer
+from models.transaction import Transaction
+from models.order import Order
+from models.purchase import Purchase
 
 Model.connect('CookieMonster.sqlite')
 cursor = Model.cursor

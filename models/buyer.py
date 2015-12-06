@@ -1,4 +1,4 @@
-from model import Model
+from models.model import Model
 
 class Buyer(Model):
   # make sure table matches name in tables.py
