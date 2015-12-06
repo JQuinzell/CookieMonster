@@ -19,6 +19,11 @@ class Model(object):
     return cursor.execute(sql)
 
   @staticmethod
+  def make_cursor():
+    conn = sqlite3.connect(Model.uri)
+    return conn, conn.cursor()
+
+  @staticmethod
   def insert_in(table, **params):
     attributes = "(" + ", ".join('"{0}"'.format(w) for w in params.keys()) + ")"
     values = "(" + ", ".join('"{0}"'.format(w) for w in params.values()) + ")"
