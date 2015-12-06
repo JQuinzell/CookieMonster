@@ -27,23 +27,29 @@ def index():
 @distributors.route('/distributors/<name>', methods=['GET', 'PUT'])
 def dist(name):
   if request.method == 'GET':
+    conn, cur = Model.make_cursor()
+    dist = cur.execute('SELECT name, address FROM distributors WHERE name="{}"'.format(name)).fetchone()
     dist = {
-      "name": name,
-      "address": "Earth",
-      "transactions": [
-        {
-          "id": 1,
-          "price": "500",
-          "cookie": "Chocolate Chip"
-        },
-        {
-          "id": 2,
-          "price": "300",
-          "cookie": "Oatmeal Grossness"
-        }
-      ]
+      "name": dist[0],
+      "address": dist[1]
     }
 
+    transactions = []
+    rows = cur.execute('''
+    SELECT id, price, cookie, amount
+    FROM transactions
+    WHERE distributor = "{}"
+    '''.format(name))
+    for r in rows:
+      trans = {
+        "id": r[0],
+        "price": r[1],
+        "cookie": r[2],
+        "amount": r[3]
+      }
+      transactions.append(trans)
+
+    dist["transactions"] = transactions
     return jsonify(**dist)
 
   if request.method == 'PUT':
