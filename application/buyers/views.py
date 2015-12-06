@@ -62,11 +62,14 @@ def show(buyer_id):
     update = request.get_json()
     first, last = update["name"].split(" ")
     #update buyer with this information
-    update = {
-      "first": first,
-      "last": last,
-    }
-    return jsonify(**update)
+    conn, cur = Model.make_cursor()
+    cur.execute('''
+    UPDATE buyers
+    SET first="{}", last="{}"
+    WHERE id={}
+    '''.format(first, last, buyer_id))
+    conn.commit()
+    return "OK"
 
   if request.method == 'DELETE':
     #delete buyer with id = buyer_id
