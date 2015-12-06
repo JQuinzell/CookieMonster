@@ -1,19 +1,23 @@
 from . import distributors
 from flask import render_template, request, jsonify
+from model import Model
 
 @distributors.route('/distributors', methods=['GET', 'POST'])
 def index():
   if request.method == 'GET':
-    dists = [
-      {
-        "name": "Guy 1",
-        "address": "Place 1"
-      },
-      {
-        "name": "Guy 2",
-        "address": "Place 2"
+    conn, cur = Model.make_cursor()
+    dists = []
+    rows = cur.execute('''
+    SELECT name, address
+    FROM distributors
+    ''')
+    for r in rows:
+      d = {
+        "name": r[0],
+        "address": r[1]
       }
-    ]
+      dists.append(d)
+
     return render_template('distributors/index.html', distributors=dists)
 
   if request.method == 'POST':
