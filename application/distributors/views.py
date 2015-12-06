@@ -31,7 +31,7 @@ def index():
     conn.commit()
     return jsonify(**dist)
 
-@distributors.route('/distributors/<name>', methods=['GET', 'PUT'])
+@distributors.route('/distributors/<name>', methods=['GET', 'PUT', 'DELETE'])
 def dist(name):
   conn, cur = Model.make_cursor()
 
@@ -76,5 +76,10 @@ def dist(name):
     set distributor = "{}"
     WHERE distributor = "{}"
     '''.format(new_name, name))
+    conn.commit()
+    return "OK"
+
+  if request.method == 'DELETE':
+    cur.execute('DELETE FROM distributors WHERE name = "{}"'.format(name))
     conn.commit()
     return "OK"
