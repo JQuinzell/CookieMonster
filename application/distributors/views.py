@@ -33,8 +33,9 @@ def index():
 
 @distributors.route('/distributors/<name>', methods=['GET', 'PUT'])
 def dist(name):
+  conn, cur = Model.make_cursor()
+
   if request.method == 'GET':
-    conn, cur = Model.make_cursor()
     dist = cur.execute('SELECT name, address FROM distributors WHERE name="{}"'.format(name)).fetchone()
     dist = {
       "name": dist[0],
@@ -61,4 +62,19 @@ def dist(name):
 
   if request.method == 'PUT':
     update = request.get_json()
-    return jsonify(**update)
+    new_name = update["name"]
+    address = update["address"]
+    cur.execute('''
+    UPDATE distributors
+    SET name = "{}", address = "{}"
+    WHERE name = "{}"
+    '''.format(new_name, address, name))
+
+    #update in transactions
+    cur.execute('''
+    UPDATE transactions
+    set distributor = "{}"
+    WHERE distributor = "{}"
+    '''.format(new_name, name))
+    conn.commit()
+    return "OK"
