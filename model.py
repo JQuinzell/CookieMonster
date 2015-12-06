@@ -18,6 +18,17 @@ class Model(object):
     cursor = conn.cursor()
     return cursor.execute(sql)
 
+  @staticmethod
+  def insert_in(table, **params):
+    attributes = "(" + ", ".join('"{0}"'.format(w) for w in params.keys()) + ")"
+    values = "(" + ", ".join('"{0}"'.format(w) for w in params.values()) + ")"
+
+    sql = "INSERT INTO " + table + attributes + " VALUES " + values
+    conn = sqlite3.connect(Model.uri)
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    conn.commit()
+
   def insert(self, **params):
     attributes = "(" + ", ".join('"{0}"'.format(w) for w in params.keys()) + ")"
     values = "(" + ", ".join('"{0}"'.format(w) for w in params.values()) + ")"
