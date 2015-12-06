@@ -38,5 +38,6 @@ for i in range(5):
 Transaction("Distributor1", "Warehouse1", "Cookie1", 500, 500).save()
 
 #add buyer order
-purchase = Purchase("Cookie1", "Warehouse1", 5)
-Order("Buyer1", [purchase]).save()
+purchase1 = Purchase("Cookie1", "Warehouse1", 5)
+purchase2 = Purchase("Cookie2", "Warehouse2", 5)
+Order("Buyer1", 20, [purchase1, purchase2]).save()
