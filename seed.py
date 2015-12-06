@@ -20,23 +20,23 @@ cursor.execute('DELETE FROM purchases')
 
 #create cookies
 for i in range(5):
-  Cookie("Cookie " + str(i), 1.99).save()
+  Cookie("Cookie" + str(i), 1.99).save()
 
 #create distributors
 for i in range(5):
-  Distributor("Distributor " + str(i), "Somewhereville").save()
+  Distributor("Distributor" + str(i), "Somewhereville").save()
 
 #create warehouses
 for i in range(5):
-  Warehouse("Warehouse " + str(i), "In a town").save()
+  Warehouse("Warehouse" + str(i), "In a town").save()
 
 #create buyers
 for i in range(5):
-  Buyer("Buyer " + str(i), "Fredmeyer").save()
+  Buyer("Buyer" + str(i), "Fredmeyer").save()
 
 #add distributor transactions
-Transaction("Distributor 1", "Warehouse 1", "Cookie 1", 500, 500).save()
+Transaction("Distributor1", "Warehouse1", "Cookie1", 500, 500).save()
 
 #add buyer order
-purchase = Purchase("Cookie 1", "Warehouse 1", 5)
-Order("Buyer 1", [purchase]).save()
+purchase = Purchase("Cookie1", "Warehouse1", 5)
+Order("Buyer1", [purchase]).save()
