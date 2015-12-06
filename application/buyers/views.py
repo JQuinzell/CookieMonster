@@ -1,5 +1,5 @@
 from . import buyers
-from models import Model
+from model import Model
 from flask import render_template, jsonify, request
 
 @buyers.route('/buyers', methods=['GET', 'POST'])
@@ -17,6 +17,8 @@ def index():
 
   if request.method == 'POST':
     buyer = request.get_json()
+    first, last = buyer["name"].split()
+    Model.insert_in("buyers", first=first, last=last)
     #create buyer
     return jsonify(**buyer)
 
