@@ -1,6 +1,6 @@
-from models.model import Model
-from models.buyer import Buyer
-from models.purchase import Purchase
+from model import Model
+from buyer import Buyer
+from purchase import Purchase
 
 class Order(Model):
   # make sure table matches name in tables.py

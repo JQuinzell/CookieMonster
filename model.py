@@ -1,5 +1,5 @@
 import sqlite3
-from models.query import Query
+from query import Query
 
 class Model(object):
 
@@ -8,12 +8,15 @@ class Model(object):
 
   @staticmethod
   def connect(uri):
-    Model.conn =sqlite3.connect(uri)
+    Model.uri = uri
+    Model.conn = sqlite3.connect(uri)
     Model.cursor = Model.conn.cursor()
 
   @staticmethod
   def execute(sql):
-    return Model.cursor.execute(sql)
+    conn = sqlite3.connect(Model.uri)
+    cursor = conn.cursor()
+    return cursor.execute(sql)
 
   def insert(self, **params):
     attributes = "(" + ", ".join('"{0}"'.format(w) for w in params.keys()) + ")"

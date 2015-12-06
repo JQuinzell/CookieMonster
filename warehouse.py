@@ -1,9 +1,8 @@
-from models.model import Model
-from models.transaction import Transaction
+from model import Model
 
-class Distributor(Model):
+class Warehouse(Model):
   # make sure table matches name in tables.py
-  table = "distributors"
+  table = "warehouses"
 
   def __init__(self, name, address):
     self.name = name
@@ -20,5 +19,5 @@ class Distributor(Model):
 
   @staticmethod
   def all():
-    for distributor in Distributor.select().frome(Distributor.table).execute():
-      yield Distributor(*distributor)
+    for warehouse in Warehouse.select().frome(Warehouse.table).execute():
+      yield Warehouse(*warehouse)

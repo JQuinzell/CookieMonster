@@ -1,4 +1,4 @@
 from application import app
-from models import Model
+from model import Model
 Model.connect('cookiemonster.sqlite')
 app.run(debug=True)
