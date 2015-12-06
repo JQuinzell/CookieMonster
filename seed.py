@@ -7,6 +7,7 @@ from buyer import Buyer
 from transaction import Transaction
 from order import Order
 from purchase import Purchase
+from random import randint
 
 Model.connect('CookieMonster.sqlite')
 cursor = Model.cursor
@@ -38,6 +39,8 @@ for i in range(5):
 Transaction("Distributor1", "Warehouse1", "Cookie1", 500, 500).save()
 
 #add buyer order
-purchase1 = Purchase("Cookie1", "Warehouse1", 5)
-purchase2 = Purchase("Cookie2", "Warehouse2", 5)
-Order("Buyer1", 20, [purchase1, purchase2]).save()
+for i in range(5):
+  purchases = []
+  for j in range(randint(1,5)):
+    purchases.append(Purchase("Cookie"+str(j), "Warehouse"+str(j), randint(0,12)))
+  Order("Buyer"+str(i), randint(0,50), purchases).save()
