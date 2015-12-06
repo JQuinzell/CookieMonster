@@ -73,4 +73,7 @@ def show(buyer_id):
 
   if request.method == 'DELETE':
     #delete buyer with id = buyer_id
+    conn, cur = Model.make_cursor()
+    cur.execute('DELETE FROM buyers WHERE id={}'.format(buyer_id))
+    conn.commit()
     return "OK"
