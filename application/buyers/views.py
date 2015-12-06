@@ -27,51 +27,6 @@ def show(buyer_id):
   #find buyer with buyer_id
 
   if request.method == 'GET':
-    buyer = {
-      "name": "John Doe", #first + last
-      "addresses": [{"address": "Address 1"}, {"address": "Address 2"}], #use join table
-      "id": buyer_id,
-      "orders": [
-        {
-          "id": 1,
-          "description": "I bought some cookies!",
-          "total": 0, #aggregate - sum price
-          "purchases": [
-            {
-              "cookie": "Test",
-              "warehouse": "Some Warehouse",
-              "amount": 0,
-              "price": "0.00"
-            },
-            {
-              "cookie": "Test",
-              "warehouse": "Some Warehouse",
-              "amount": 0,
-              "price": "0.00"
-            }
-          ]
-        },
-        {
-          "id": 2,
-          "description": "I bought some cookies!",
-          "total": 0,
-          "purchases": [
-            {
-              "cookie": "Test",
-              "warehouse": "Some Warehouse",
-              "amount": 0,
-              "price": "0.00"
-            },
-            {
-              "cookie": "Test",
-              "warehouse": "Some Warehouse",
-              "amount": 0,
-              "price": "0.00"
-            }
-          ]
-        }
-      ]
-    }
     buyer = Model.execute('SELECT first, last, id FROM buyers WHERE id={}'.format(buyer_id)).fetchone()
     print("GET BUYER:", buyer)
     buyer = {
