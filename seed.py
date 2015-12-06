@@ -10,6 +10,7 @@ from purchase import Purchase
 from random import randint
 
 Model.connect('CookieMonster.sqlite')
+conn = Model.conn
 cursor = Model.cursor
 
 cursor.execute('DELETE FROM cookies')
@@ -44,3 +45,13 @@ for i in range(5):
   for j in range(randint(1,5)):
     purchases.append(Purchase("Cookie"+str(j), "Warehouse"+str(j), randint(0,12)))
   Order("Buyer"+str(i), randint(0,50), purchases).save()
+
+for i in range(5):
+  for j in range(5):
+    cookie = "Cookie"+str(i)
+    warehouse = "Warehouse"+str(j)
+    cursor.execute('''
+    INSERT INTO stock(cookie, warehouse, quantity)
+    VALUES ("{}", "{}", {})
+    '''.format(cookie, warehouse, 100))
+conn.commit()
