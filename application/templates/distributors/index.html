@@ -188,7 +188,9 @@
         method: 'POST'
       })
         .done(function(data){
-          console.log(data)
+          if(data.ok){
+            localStorage.setItem('user', values.name)
+          }
         })
     })
   }
