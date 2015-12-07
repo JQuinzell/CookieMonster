@@ -77,3 +77,14 @@ def show(buyer_id):
     cur.execute('DELETE FROM buyers WHERE id={}'.format(buyer_id))
     conn.commit()
     return "OK"
+
+@buyers.route('/signin', methods=['POST'])
+def signin():
+  conn, cur = Model.make_cursor()
+  data = request.get_json()
+  response = {}
+  first = data["name"]
+  password = data["password"]
+  user = cur.execute('SELECT password FROM buyers WHERE first = "{}"'.format(first)).fetchone()
+  response["ok"] = password == user[0]
+  return jsonify(**response)
