@@ -38,11 +38,18 @@ def index():
 
 @cookies.route('/cookies/<name>', methods=['GET', 'PUT', 'DELETE'])
 def cookie(name):
+  conn, cur = Model.make_cursor()
+
   if request.method == 'GET':
-    #not in use
+    row = cur.execute('''
+    SELECT name, price
+    FROM cookies
+    WHERE name="{}"
+    '''.format(name)).fetchone()
+
     cookie = {
-      "name": name,
-      "price": "5.99"
+      "name": row[0],
+      "price": row[1]
     }
 
     return jsonify(**cookie)
@@ -52,7 +59,6 @@ def cookie(name):
     cookie = request.get_json()
     new_name = cookie["name"]
     price = cookie["price"]
-    conn, cur = Model.make_cursor()
     cur.execute('''
     UPDATE cookies
     SET name = "{}", price = {}
