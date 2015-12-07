@@ -41,6 +41,28 @@
       </li>
     {{/transactions}}
     </ul>
+
+    <h4>New Transaction</h4>
+    <form id="transaction">
+      <div class="form-group">
+        <input class="form-control" name="cookie" type="text" placeholder="Cookie">
+      </div>
+
+      <div class="form-group">
+        <input class="form-control" name="warehouse" type="text" placeholder="Warehouse">
+      </div>
+
+      <div class="form-group">
+        <input class="form-control" name="price" type="text" placeholder="Price">
+      </div>
+
+      <div class="form-group">
+        <input class="form-control" name="amount" type="text" placeholder="Amount">
+      </div>
+      <button class="btn btn-default">Submit</button>
+    </form>
+
+      <br>
     <button id="delete" class="btn btn-danger">Delete</button>
   </div>
   {%endraw%}
