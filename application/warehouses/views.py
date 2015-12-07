@@ -23,6 +23,13 @@ def index():
 
   if request.method == 'POST':
     ware = request.get_json()
+    name = ware["name"]
+    address = ware["address"]
+    cur.execute('''
+    INSERT INTO warehouses(name, address)
+    VALUES ("{}", "{}")
+    '''.format(name, address))
+    conn.commit()
     return jsonify(**ware)
 
 @warehouses.route('/warehouses/<name>', methods=['GET', 'PUT'])
