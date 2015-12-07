@@ -121,6 +121,27 @@
                 console.log(data)
               })
           })
+
+          $content.find('form#transaction').click(function(e){
+            e.preventDefault()
+
+            var values = {}
+            $.each($content.find('form#transaction').serializeArray(), function(i, field){
+              if(field.value) {
+                values[field.name] = field.value
+              }
+            })
+
+            $.ajax('distributors/' + name + '/transaction', {
+              contentType: 'application/json',
+              dataType: 'json',
+              data: JSON.stringify(values),
+              method: 'POST'
+            })
+              .then(function(data){
+                console.log(data)
+              })
+          })
         })
     })
   })
