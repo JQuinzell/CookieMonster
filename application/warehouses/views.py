@@ -82,4 +82,20 @@ def warehouse(name):
 
   if request.method == 'PUT':
     update = request.get_json()
+    new_name = update["name"]
+    address = update["address"]
+
+    cur.execute('''
+    UPDATE warehouses
+    SET name = "{}", address = "{}"
+    WHERE name = "{}"
+    '''.format(new_name, address, name))
+
+    cur.execute('''
+    UPDATE stock
+    SET warehouse = "{}"
+    WHERE warehouse = "{}"
+    '''.format(new_name, name))
+
+    conn.commit()
     return jsonify(**update)
