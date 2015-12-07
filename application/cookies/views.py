@@ -9,7 +9,7 @@ def index():
     rows = cur.execute('''
     SELECT name, price, SUM(quantity)
     FROM cookies, stock
-    WHERE name=cookie
+    WHERE name=cookie and quantity > 0
     GROUP BY cookie
     ''')
 
