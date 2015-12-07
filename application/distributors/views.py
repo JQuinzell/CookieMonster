@@ -86,4 +86,23 @@ def dist(name):
 
 @distributors.route('/distributors/<name>/transaction', methods=['POST'])
 def transaction(name):
-  pass
+  conn, cur = Model.make_cursor()
+  transaction = request.get_json()
+  cookie = transaction["cookie"]
+  warehouse = transaction["warehouse"]
+  price = transaction["price"]
+  amount = transaction["amount"]
+
+  cur.execute('''
+  INSERT INTO transactions(distributor, cookie, warehouse, price, amount)
+  VALUES ("{}", "{}", "{}",{}, {})
+  '''.format(name, cookie, warehouse, price, amount))
+
+  cur.execute('''
+  UPDATE stock
+  SET quantity = quantity + {}
+  WHERE warehouse = "{}" and cookie = "{}"
+  '''.format(amount, warehouse, cookie))
+
+  conn.commit()
+  return "OK"
