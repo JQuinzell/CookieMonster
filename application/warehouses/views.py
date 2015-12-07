@@ -50,7 +50,34 @@ def warehouse(name):
         }
       ]
     }
+    warehouses = []
+    ware = cur.execute('''
+    SELECT name, address
+    FROM warehouses
+    WHERE name = "{}"
+    '''.format(name)).fetchone()
+    print("GET", ware)
+    ware = {
+      "name": ware[0],
+      "address" : ware[1]
+    }
 
+    cookies = []
+    rows = cur.execute('''
+    SELECT name, SUM(quantity)
+    FROM cookies, stock
+    WHERE name = cookie and warehouse = "{}"
+    GROUP BY cookie
+    '''.format(name))
+    for r in rows:
+      print("Cookie", r)
+      cook = {
+        "name": r[0],
+        "count": r[1]
+      }
+      cookies.append(cook)
+
+    ware["cookies"] = cookies
     return jsonify(**ware)
 
   if request.method == 'PUT':
