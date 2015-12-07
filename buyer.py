@@ -13,6 +13,7 @@ class Buyer(Model):
     params = {
       "first": self.first,
       "last": self.last,
+      "password": "password"
     }
 
     self.insert(**params)

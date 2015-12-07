@@ -54,7 +54,8 @@ cursor.execute('''
   CREATE TABLE IF NOT EXISTS buyers(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     first VARCHAR(20),
-    last VARCHAR(20)
+    last VARCHAR(20),
+    password VARCHAR(20)
   );
   ''')
 
