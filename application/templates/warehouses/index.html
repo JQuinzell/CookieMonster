@@ -39,6 +39,8 @@
       </li>
     {{/cookies}}
     </ul>
+
+    <button id="delete" class="btn btn-danger">Delete</button>
   </div>
   {%endraw%}
   </script>
@@ -88,6 +90,14 @@
           var content = Mustache.render(viewTemplate, data)
           $content.html(content)
           $content.find('button#edit').click(loadEditPage)
+          $content.find('button#delete').click(function(){
+            $.ajax('warehouses/' + current.name, {
+              'method': 'DELETE'
+            })
+              .done(function(data){
+                console.log(data)
+              })
+          })
         })
     })
   })

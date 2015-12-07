@@ -32,7 +32,7 @@ def index():
     conn.commit()
     return jsonify(**ware)
 
-@warehouses.route('/warehouses/<name>', methods=['GET', 'PUT'])
+@warehouses.route('/warehouses/<name>', methods=['GET', 'PUT', 'DELETE'])
 def warehouse(name):
   conn, cur = Model.make_cursor()
   if request.method == 'GET':
@@ -99,3 +99,9 @@ def warehouse(name):
 
     conn.commit()
     return jsonify(**update)
+
+  if request.method == 'DELETE':
+    cur.execute('DELETE FROM warehouses WHERE name = "{}"'.format(name))
+    cur.execute('DELETE FROM stock WHERE warehouse = "{}"'.format(name))
+    conn.commit()
+    return "OK"
