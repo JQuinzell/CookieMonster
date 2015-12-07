@@ -83,3 +83,7 @@ def dist(name):
     cur.execute('DELETE FROM distributors WHERE name = "{}"'.format(name))
     conn.commit()
     return "OK"
+
+@distributors.route('/distributors/<name>/transaction', methods=['POST'])
+def transaction(name):
+  pass
