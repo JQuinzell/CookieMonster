@@ -52,7 +52,7 @@ def warehouse(name):
     rows = cur.execute('''
     SELECT name, SUM(quantity)
     FROM cookies, stock
-    WHERE name = cookie and warehouse = "{}"
+    WHERE name = cookie and warehouse = "{}" and quantity > 0
     GROUP BY cookie
     '''.format(name))
     for r in rows:
