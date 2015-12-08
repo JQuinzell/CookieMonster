@@ -88,3 +88,9 @@ def signin():
   user = cur.execute('SELECT password FROM buyers WHERE first = "{}"'.format(first)).fetchone()
   response["ok"] = password == user[0]
   return jsonify(**response)
+
+@buyers.route('/buyers/shop', methods=['GET', 'POST'])
+def shop():
+  conn, cur = Model.make_cursor()
+
+  return "OK"
