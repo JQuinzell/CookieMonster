@@ -93,4 +93,7 @@ def signin():
 def shop():
   conn, cur = Model.make_cursor()
 
+  if request.method == 'GET':
+    return render_template("buyers/shop.html")
+  
   return "OK"
