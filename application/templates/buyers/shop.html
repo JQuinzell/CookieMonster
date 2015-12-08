@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block main %}
+{{ super() }}
+<div class="col-md-6">
+  <h2>Buy Stuff</h2>
+  <form id="target">
+    <script id="template" type="x-tmpl-mustache">
+    {% raw %}
+    {{#cookies}}
+      {{ name }}: <input style="width:75px;" name="{{ name }}" type="number" class="form-control">
+    {{/cookies}} 
+    {%endraw%}
+    </script>    
+     
+  </form>
+  <br>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+  template = $('#template').html()
+  target = $('#target')
+  var data = {"cookies": []}
+  var cookies = JSON.parse(localStorage.getItem('cookies'))
+  cookies.forEach(function(cookie){
+    data.cookies.push({
+      "name": cookie
+    })
+  })
+
+  var content = Mustache.render(template, data)
+  target.html(content)
+  target.append('<br><button id="buy" class="btn btn-primary">Purchase</button>')
+  $('#target').submit(function(e){
+    e.preventDefault()
+    var values = {}
+    $.each($('#target').serializeArray(), function(i, field){
+      if(field.value) {
+        values[field.name] = field.value
+      }
+    })
+
+    values['buyer'] = localStorage.getItem('user')
+
+    $.ajax({
+      url: '{{ url_for("buyers.shop", _external=True) }}',
+      contentType: 'application/json',
+      dataType: 'json',
+      data: JSON.stringify(values),
+      method: 'POST'
+    })
+      .finally(function(data){
+        console.log("Clearing")
+        localStorage.removeItem('cookies')
+      })
+    console.log(values)
+  })
+</script>
+{% endblock %}

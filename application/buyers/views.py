@@ -95,5 +95,44 @@ def shop():
 
   if request.method == 'GET':
     return render_template("buyers/shop.html")
-  
-  return "OK"
+
+  if request.method == 'POST':
+    update = request.get_json()
+    total = 0
+    buyer = update['buyer']
+    del update['buyer']
+    print(buyer)
+    print(update)
+
+    buyer = cur.execute('SELECT id FROM buyers WHERE first = "{}"'.format(buyer)).fetchone()[0]
+    for cookie, amt in update.items():
+      price = float(cur.execute('SELECT price FROM cookies WHERE name = "{}"'.format(cookie)).fetchone()[0])
+      total += price
+
+    cur.execute('''
+    INSERT INTO buyer_orders(buyer, total)
+    VALUES ({}, {})
+    '''.format(buyer, total))
+
+    conn.commit()
+    order = cur.lastrowid
+
+    for cookie, amt in update.items():
+      price = float(cur.execute('SELECT price FROM cookies WHERE name = "{}"'.format(cookie)).fetchone()[0])
+      warehouse = cur.execute('SELECT warehouse FROM stock WHERE cookie = "{}"'.format(cookie)).fetchone()[0]
+      print(warehouse, price)
+
+      cur.execute('''
+      INSERT INTO purchases(cookie, warehouse, buyer_order, amount)
+      VALUES ("{}", "{}", {}, {})
+      '''.format(cookie, warehouse, order, amt))
+
+      cur.execute('''
+      UPDATE stock
+      SET quantity = quantity - {}
+      WHERE cookie = "{}" and warehouse = "{}"
+      '''.format(amt, cookie, warehouse))
+
+    conn.commit()
+    print(total)
+    return "OK"
