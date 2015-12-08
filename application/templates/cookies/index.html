@@ -79,6 +79,7 @@
           cookies = [name]
         }
 
+        cookies = _.uniq(cookies)
         console.log(cookies)
         localStorage.setItem('cookies', JSON.stringify(cookies))
       })
