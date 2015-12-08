@@ -8,7 +8,7 @@
     <button id="{{ cookie.name | replace(" ", "-") }}" class="list-group-item">
       <span class="badge">{{ cookie.count }}</span>
       <h4>{{ cookie.name }} <small>${{ cookie.price }}</small>
-        <a><span class="glyphicon glyphicon-ok {{ cookie.name | replace(" ", "-") }}"></span></a>
+        <a><span id="{{ cookie.name | replace(" ", "-") }}" class="glyphicon glyphicon-ok"></span></a>
       </h4>
     </button>
     {% endfor %}
@@ -64,6 +64,24 @@
 
     if(!localStorage.getItem('user')) {
       $('#cookies-list button span.glyphicon').addClass('hide')
+
+    } else {
+      $('#cookies-list button span.glyphicon').click(function(e){
+        e.preventDefault()
+        var name = this.id.replace(/-/g, ' ')
+        var cookies = localStorage.getItem('cookies')
+        console.log(name)
+        console.log(cookies)
+        if(cookies){
+          cookies = JSON.parse(cookies)
+          cookies.push(name)
+        } else {
+          cookies = [name]
+        }
+
+        console.log(cookies)
+        localStorage.setItem('cookies', JSON.stringify(cookies))
+      })
     }
     $('#cookies-list button').click(function(){
       var name = this.id.replace(/-/g, ' ')
