@@ -51,7 +51,7 @@
       data: JSON.stringify(values),
       method: 'POST'
     })
-      .finally(function(data){
+      .always(function(data){
         console.log("Clearing")
         localStorage.removeItem('cookies')
       })
