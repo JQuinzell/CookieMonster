@@ -36,20 +36,6 @@ def index():
 def warehouse(name):
   conn, cur = Model.make_cursor()
   if request.method == 'GET':
-    ware = {
-      "name": name,
-      "address": "Near walmart",
-      "cookies": [
-        {
-          "name": "Cookie Dough",
-          "count": 100
-        },
-        {
-          "name": "Something Good",
-          "count": 1000
-        }
-      ]
-    }
     warehouses = []
     ware = cur.execute('''
     SELECT name, address
